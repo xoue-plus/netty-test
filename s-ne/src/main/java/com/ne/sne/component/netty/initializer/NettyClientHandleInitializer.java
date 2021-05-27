@@ -1,8 +1,6 @@
 package com.ne.sne.component.netty.initializer;
 
-import com.ne.sne.component.netty.handle.EchoClientHandle;
-import com.ne.sne.component.netty.handle.HeartbeatEncode;
-import com.ne.sne.component.netty.handle.NettyClientCustomerHandle;
+import com.ne.sne.component.netty.handle.*;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -25,7 +23,8 @@ public class NettyClientHandleInitializer extends ChannelInitializer<SocketChann
         pipeline.addLast(new HeartbeatEncode());
         pipeline.addLast("encode",new StringEncoder(CharsetUtil.UTF_8));
         pipeline.addLast("decode",new StringDecoder(CharsetUtil.UTF_8));
-        pipeline.addLast(new EchoClientHandle());
+        pipeline.addLast(new HeartBeatClientHandle());
         pipeline.addLast(new NettyClientCustomerHandle());
+        pipeline.addLast(new CustomerCliHandle01());
     }
 }

@@ -14,8 +14,8 @@ import io.netty.util.CharsetUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HeartBeatSimpleHandle extends SimpleChannelInboundHandler<CustomProtocol> {
-    private final static Logger LOGGER = LoggerFactory.getLogger(HeartBeatSimpleHandle.class);
+public class HeartBeatServerHandle extends SimpleChannelInboundHandler<CustomProtocol> {
+    private final static Logger LOGGER = LoggerFactory.getLogger(HeartBeatServerHandle.class);
     private static final ByteBuf HEART_BEAT =  Unpooled.unreleasableBuffer(Unpooled.copiedBuffer(new CustomProtocol(123456L,"pong").toString(), CharsetUtil.UTF_8));
     /**
      * 取消绑定
@@ -31,7 +31,7 @@ public class HeartBeatSimpleHandle extends SimpleChannelInboundHandler<CustomPro
         if (evt instanceof IdleStateEvent){
             IdleStateEvent idleStateEvent = (IdleStateEvent) evt ;
             if (idleStateEvent.state() == IdleState.READER_IDLE){
-                LOGGER.info("已经10秒没有收到信息！");
+                LOGGER.info("已经10秒没有收到信息！处于读空闲状态!!!!!");
                 //向客户端发送消息
                 ctx.writeAndFlush(HEART_BEAT).addListener(ChannelFutureListener.CLOSE_ON_FAILURE) ;
             }

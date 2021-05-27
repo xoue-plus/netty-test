@@ -22,12 +22,13 @@ public class NettyServerHandlerInitializer extends ChannelInitializer<SocketChan
     protected void initChannel(SocketChannel channel) throws Exception {
         ChannelPipeline pipeline = channel.pipeline();
         //心跳检测处理器10s
-        pipeline.addLast(new IdleStateHandler(10, 0, 0, TimeUnit.SECONDS));
+//        pipeline.addLast(new IdleStateHandler(10, 0, 0, TimeUnit.SECONDS));
         //编解码
+
         pipeline.addLast(new HeartbeatDecoder());
         pipeline.addLast("decode",new StringDecoder(CharsetUtil.UTF_8));
         pipeline.addLast("encode",new StringEncoder(CharsetUtil.UTF_8));
-        pipeline.addLast(new HeartBeatSimpleHandle());
+//        pipeline.addLast(new HeartBeatServerHandle());
         pipeline.addLast(new NettyServerCustomerHandle());
     }
 }
